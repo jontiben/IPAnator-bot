@@ -46,92 +46,95 @@ def xsampa_to_ipa(word: str, max_key_len: int) -> str:
 
 
 # Program starts execution here
-word = sys.argv[1]
 max_key_len = get_max_key_len()
 
-if sys.argv[1] == "-dc":
-	# Module called as a Discord bot
-	dotenv.load_dotenv()
-	token = os.getenv('DISCORD_TOKEN')
-	intents = discord.Intents.default()
-	intents.message_content = True
-	discord_client = discord.Client(intents=intents)
+if __name__ == "__main__":
+	word = sys.argv[1]
 
 
-	async def out_help(message):
-		print(f"{datetime.datetime.now()} LOG     Displaying help in [{message.guild}  #{message.channel}]")
-		await message.channel.send(help_text)
-	
-
-	commands = { # Can't be stored in resources.py
-		"x/?": out_help,
-		"x/help": out_help,
-		"x/h": out_help,
-	}
+	if sys.argv[1] == "-dc":
+		# Module called as a Discord bot
+		dotenv.load_dotenv()
+		token = os.getenv('DISCORD_TOKEN')
+		intents = discord.Intents.default()
+		intents.message_content = True
+		discord_client = discord.Client(intents=intents)
 
 
-	@discord_client.event
-	async def on_ready():
-		# After startup
-		await discord_client.change_presence(activity=discord.Game(name="x/help"))
-		print(f"{datetime.datetime.now()} LOG     IPAnator-bot is online")
-		for g, guild in enumerate(discord_client.guilds):
-			print(f"{datetime.datetime.now()} LOG     IPAnator-bot is connected to {guild.name}/{guild.id}")
-		print(f"{datetime.datetime.now()} LOG     Connected to {g+1} total servers")
-
-
-	@discord_client.event
-	async def on_message(message):
-		# Responding to messages
-
-		# Shouldn't respond to itself
-		if(message.author.id == discord_client.user.id):
-			return;
-
-		content = message.content # repr() breaks in cases with overlapping backslashes
-
-		if content in commands:
-			await commands[content](message)
+		async def out_help(message):
+			print(f"{datetime.datetime.now()} LOG     Displaying help in [{message.guild}  #{message.channel}]")
+			await message.channel.send(help_text)
 		
-		last_checked = -1
-		output_list = []
-		for x in range(0, len(content)):
-			# Find bounds of X-Sampa strings
-			trimmed_content = content[x:]
-			start_point, end_point = -1, -1
-			if x >= last_checked:
-				if "x/" in trimmed_content.lower():
-					start_point = trimmed_content.lower().index("x/")
-					if '/' in trimmed_content[start_point+2:]:
-						end_point = trimmed_content[start_point+2:].index("/")+start_point+2
-				elif "x[" in trimmed_content.lower():
-					start_point = trimmed_content.lower().index("x[")
-					if ']' in trimmed_content[start_point+2:]:
-						end_point = trimmed_content.index("]")
 
-			# Convert X-Sampa text to IPA and add to list of total
-			if start_point == 0 and end_point != -1:
-				last_checked = end_point+1
-				word = trimmed_content[start_point:end_point+1]
-				output = xsampa_to_ipa(word[1:], max_key_len)
-				output_list.append(output)
-
-		# Output list of IPA > X-Sampa conversions with the format `/x/`, `/y/`, etc.
-		if len(output_list) > 0:
-			print(f"{datetime.datetime.now()} LOG     Handled message {content} -> {output} [id {message.id}] in [{message.guild}  #{message.channel}]")
-			output_string = "`, `".join(output_list)
-			await message.channel.send(f"`{output_string}`")
+		commands = { # Can't be stored in resources.py
+			"x/?": out_help,
+			"x/help": out_help,
+			"x/h": out_help,
+		}
 
 
-	discord_client.run(token)
+		@discord_client.event
+		async def on_ready():
+			# After startup
+			await discord_client.change_presence(activity=discord.Game(name="x/help"))
+			print(f"{datetime.datetime.now()} LOG     IPAnator-bot is online")
+			for g, guild in enumerate(discord_client.guilds):
+				print(f"{datetime.datetime.now()} LOG     IPAnator-bot is connected to {guild.name}/{guild.id}")
+			print(f"{datetime.datetime.now()} LOG     Connected to {g+1} total servers")
 
 
-else:
-	# Module called in single-shot command-line mode, doesn't work with some special characters like `,
-	# or escape characters when not surrounded by parentheses.
-	# Surround the X-Sampa string with parentheses for best, if not perfect, results.
-	#print(f"Input: {word}")
-	if word[0] == 'x' and (word[1] == '/' or word[1] == '['):
-		print(xsampa_to_ipa(word[1:], max_key_len))
+		@discord_client.event
+		async def on_message(message):
+			# Responding to messages
+
+			# Shouldn't respond to itself
+			if(message.author.id == discord_client.user.id):
+				return;
+
+			content = message.content # repr() breaks in cases with overlapping backslashes
+
+			if content in commands:
+				await commands[content](message)
+			
+			last_checked = -1
+			output_list = []
+			for x in range(0, len(content)):
+				# Find bounds of X-Sampa strings
+				trimmed_content = content[x:]
+				start_point, end_point = -1, -1
+				if x >= last_checked:
+					if "x/" in trimmed_content.lower():
+						start_point = trimmed_content.lower().index("x/")
+						if '/' in trimmed_content[start_point+2:]:
+							end_point = trimmed_content[start_point+2:].index("/")+start_point+2
+					elif "x[" in trimmed_content.lower():
+						start_point = trimmed_content.lower().index("x[")
+						if ']' in trimmed_content[start_point+2:]:
+							end_point = trimmed_content.index("]")
+
+				# Convert X-Sampa text to IPA and add to list of total
+				if start_point == 0 and end_point != -1:
+					last_checked = end_point+1
+					word = trimmed_content[start_point:end_point+1]
+					output = xsampa_to_ipa(word[1:], max_key_len)
+					output_list.append(output)
+
+			# Output list of IPA > X-Sampa conversions with the format `/x/`, `/y/`, etc.
+			if len(output_list) > 0:
+				print(f"{datetime.datetime.now()} LOG     Handled message {content} -> {output} [id {message.id}] in [{message.guild}  #{message.channel}]")
+				output_string = "`, `".join(output_list)
+				await message.channel.send(f"`{output_string}`")
+
+
+		discord_client.run(token)
+
+
 	else:
-		print(xsampa_to_ipa(word, max_key_len))
+		# Module called in single-shot command-line mode, doesn't work with some special characters like `,
+		# or escape characters when not surrounded by parentheses.
+		# Surround the X-Sampa string with parentheses for best, if not perfect, results.
+		#print(f"Input: {word}")
+		if word[0] == 'x' and (word[1] == '/' or word[1] == '['):
+			print(xsampa_to_ipa(word[1:], max_key_len))
+		else:
+			print(xsampa_to_ipa(word, max_key_len))
