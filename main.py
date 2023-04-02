@@ -8,9 +8,8 @@ from resources import *
 
 def get_max_key_len() -> int:
 	# Get the length of the longest key
+	return max(len(key) for key in xsampa_ipa_dict.keys())
 
-	xsampa_keys = list(xsampa_ipa_dict.keys())
-	return len(sorted(xsampa_keys, key = lambda k : len(k))[-1])
 
 
 def xsampa_to_ipa(word: str, max_key_len: int) -> str:
@@ -32,7 +31,7 @@ def xsampa_to_ipa(word: str, max_key_len: int) -> str:
 						to_replace = word[c:d]
 						next_unused_pos = d
 			if to_replace != "":
-				#print(fr"{datetime.datetime.now()} LOG     Replacing {to_replace} with {xsampa_ipa_dict[to_replace]}")
+				#print(fr"{datetime.datetime.now()} LOG     Replacing {to_replace} with {xsampa_ipa_dict[to_replace]}") # debugging
 				output_string += xsampa_ipa_dict[to_replace]
 			else:
 				output_string += char
@@ -93,8 +92,9 @@ if __name__ == "__main__":
 
 			content = message.content # repr() breaks in cases with overlapping backslashes
 
-			if content in commands:
-				await commands[content](message)
+			command = commands.get(content)
+			if command:
+				await command(message)
 			
 			last_checked = -1
 			output_list = []
