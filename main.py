@@ -61,7 +61,7 @@ if __name__ == "__main__":
 		discord_client = discord.Client(intents=intents)
 
 
-		async def out_help(message):
+		async def out_help(message: discord.Message) -> None:
 			print(f"{datetime.datetime.now()} LOG     Displaying help in [{message.guild}  #{message.channel}]")
 			await message.channel.send(help_text)
 		
@@ -74,7 +74,7 @@ if __name__ == "__main__":
 
 
 		@discord_client.event
-		async def on_ready():
+		async def on_ready() -> None:
 			# After startup
 			await discord_client.change_presence(activity=discord.Game(name="x/help"))
 			print(f"{datetime.datetime.now()} LOG     IPAnator-bot is online")
@@ -84,7 +84,7 @@ if __name__ == "__main__":
 
 
 		@discord_client.event
-		async def on_message(message):
+		async def on_message(message: discord.Message) -> None:
 			# Responding to messages
 
 			# Shouldn't respond to itself
