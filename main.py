@@ -32,7 +32,7 @@ def xsampa_to_ipa(word: str, max_key_len: int) -> str:
 						to_replace = word[c:d]
 						next_unused_pos = d
 			if to_replace != "":
-				print(fr"{datetime.datetime.now()} LOG     Replacing {to_replace} with {xsampa_ipa_dict[to_replace]}")
+				#print(fr"{datetime.datetime.now()} LOG     Replacing {to_replace} with {xsampa_ipa_dict[to_replace]}")
 				output_string += xsampa_ipa_dict[to_replace]
 			else:
 				output_string += char
