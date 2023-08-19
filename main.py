@@ -69,6 +69,9 @@ if __name__ == "__main__":
 			"x/?": out_help,
 			"x/help": out_help,
 			"x/h": out_help,
+			"x[?": out_help,
+			"x[help": out_help,
+			"x[h": out_help,
 		}
 
 

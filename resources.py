@@ -224,4 +224,4 @@ formatting_dict = { # Second pass for formatting
 
 help_example = r"x/@.\"d'in \"dPa \"tr'i/"
 help_example_out = r"`/ə.ˈdʲin ˈdʋa ˈtrʲi/`"
-help_text = f"IPAnator-bot takes a formatted, closed X-SAMPA message (https://en.wikipedia.org/wiki/X-SAMPA) beginning with x/ or x[ and outputs the IPA conversion. Please send requests and ideas to @jontiben#7855.\n\n**Example:**\n{help_example} -> {help_example_out}\n\nNote: Use a semicolon (;) to break up letters that would otherwise appear as an affricate; x/tS/ -> `/t͡ʃ/` but x/t;S/ -> `/tʃ/`."
+help_text = f"IPAnator-bot takes a formatted, closed X-SAMPA message (https://en.wikipedia.org/wiki/X-SAMPA) beginning with x/ or x[ and outputs the IPA conversion. Please send requests and ideas to @jontiben on Discord.\n\n**Example:**\n{help_example} -> {help_example_out}\n\nNote: Use a semicolon (;) to break up letters that would otherwise appear as an affricate; x/tS/ -> `/t͡ʃ/` but x/t;S/ -> `/tʃ/`."
