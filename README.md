@@ -72,7 +72,7 @@ At any time you can use x/h, x/?, or x/help to get help.
 
 ### Using my Discord Bot Hosting:
 
-Contact me on Discord where I'm jontiben#7855 and maybe we can work something out.
+Contact me on Discord where I'm `jontiben` and maybe we can work something out.
 
 ### Importing from Another Python Module:
 
@@ -92,7 +92,7 @@ import xsampa_ipa
 
 test_word = "/tEst/"
 
-print(xsampa-ipa.xsampa_to_ipa(test_word, xsampa-ipa.max_key_len))
+print(xsampa_ipa.xsampa_to_ipa(test_word, xsampa-ipa.max_key_len))
 ```
 
 Which, when run, outputs
