@@ -1,7 +1,7 @@
 # IPAnator-bot
 By jontiben, 2023, in Python
 
-**[X-SAMPA](https://en.wikipedia.org/wiki/X-SAMPA)** is a system for transcribing the [International Phonetic Alphabet](https://en.wikipedia.org/wiki/International_Phonetic_Alphabet) (IPA) using the [ASCII](https://en.wikipedia.org/wiki/ASCII) character set. It's probably easier to type than IPA if your keyboard doesn't have keys for all ~155 IPA symbols. This small project is primarily a discord bot for automatically converting X-SAMPA text in user messages to the IPA, but it can also run in single-shot mode in the command line.
+**[X-SAMPA](https://en.wikipedia.org/wiki/X-SAMPA)** is a system for transcribing the [International Phonetic Alphabet](https://en.wikipedia.org/wiki/International_Phonetic_Alphabet) (IPA) using the [ASCII](https://en.wikipedia.org/wiki/ASCII) character set. It's probably easier to type than IPA if your keyboard doesn't have keys for all ~155 IPA symbols. This small project primarily serves as a discord bot for automatically converting X-SAMPA text in user messages to the IPA, but it can also run in single-shot mode in the command line.
 
 Please contact me (`@jontiben`) on Discord for any suggestions, requests, and questions.
 
